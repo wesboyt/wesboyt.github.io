@@ -1,0 +1,17 @@
+#equity {
+    text-align:left;
+    border-collapse: collapse;
+    font-family:'JetBrains Mono', serif;
+    z-index: 2;
+}
+.equity tbody td {
+    font-family:'JetBrains Mono', serif;
+    padding:5px;
+    border-width:2px;
+    margin:20px;
+    background:#474749;
+    font-size:20px;
+    color:#a4a3a3;
+    border-color:#5a5a5c;
+    font-weight:bolder;
+}
