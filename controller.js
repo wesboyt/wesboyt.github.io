@@ -52,6 +52,30 @@ function setup() {
             }
         }
     );
+    let hh = document.querySelector("#hhin");
+    hh.style.cssText = "color:#a4a3a3;"
+    hh.style.background = "#474749"
+    hh.style.borderColor = "#5a5a5c"
+    hh.addEventListener('keypress', (key) => {
+        if(key.key == 'Enter') {
+            post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com", hh.value);
+        }
+    });
+}
+
+function post(url, data) {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            console.log(xhr.response);
+        }
+    }
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+        value: data
+    }));
+
 }
 
 document.addEventListener("DOMContentLoaded", () => { setup(); });
