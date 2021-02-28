@@ -58,7 +58,7 @@ function setup() {
     hh.style.borderColor = "#5a5a5c"
     hh.addEventListener('keypress', (key) => {
         if(key.key == 'Enter') {
-            post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com", hh.value);
+            post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/ProcessPayment", hh.value);
         }
     });
 }
@@ -70,7 +70,7 @@ function post(url, data) {
             console.log(xhr.response);
         }
     }
-    xhr.open("POST", url, true);
+    xhr.open("GET", url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
         value: data
