@@ -72,7 +72,6 @@ function post(url, data) {
     }
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Access-Control-Allow-Origin', 'https://exploits.gg/');
     xhr.send(JSON.stringify({
         value: data
     }));
