@@ -58,7 +58,7 @@ function setup() {
     hh.style.borderColor = "#5a5a5c"
     hh.addEventListener('keypress', (key) => {
         if(key.key == 'Enter') {
-            post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/ProcessPayment", hh.value);
+            post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/Pay", hh.value);
         }
     });
 }
