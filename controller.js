@@ -44,7 +44,7 @@ function setup() {
                 let outputs = table.children;
                 console.log(outputs);
                 for(let i = 0; i < equities.length; i++) {
-                    outputs[i].textContent = String(equities[i] * 100).substring(0,5) + '%';
+                    outputs[i].textContent = String(equities[i] * 100).substring(0,6) + '%';
                     outputs[i].style.visibility = "visible";
                 }
                 for(let i = equities.length; i < 9; i++) {
