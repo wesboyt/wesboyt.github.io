@@ -80,4 +80,18 @@ function post(url, data) {
 
 }
 
+function showButton(){
+    let authRequest;
+    OffAmazonPayments.Button("AmazonPayButton", "A161J2LIJO90VQ", {
+        type:  "PwA",
+        color: "Gold",
+        size:  "small",
+
+        authorization: function() {
+            loginOptions = {scope: "profile", popup: "true"};
+            authRequest = amazon.Login.authorize (loginOptions);
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => { setup(); });
