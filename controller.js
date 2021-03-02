@@ -15,6 +15,8 @@ function setup() {
     }
     eq.appendChild(tr);
 
+
+
     //style.visibility = "hidden"
 
     txt.addEventListener('keypress', (key) => {
