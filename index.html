@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script type='text/javascript'>
+            window.onAmazonLoginReady = function() {
+                amazon.Login.setClientId('A161J2LIJO90VQ');
+            };
+
+            window.onAmazonPaymentsReady = function() {
+                showButton();
+            };
+        </script>
+        </script>
+        <script src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js' async></script>
         <meta charset="UTF-8">
         <title>nl->plo6</title>
         <script src="hello.js"></script>
-        <script src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js' async></script>
         <script src="controller.js"></script>
         <script type='text/javascript'>
             window.onAmazonPaymentsReady = function() {
@@ -24,8 +34,9 @@
             </table>
         </div>
         <div id="hh" style="position:absolute;top:210px">
-            <input type="text" id="hhin" value="PokerStars Hand #219042..." size="77">
+                    <input type="text" id="hhin" value="PokerStars Hand #219042..." size="77">
         </div>
+        <div id="AmazonPayButton" style="position:absolute;top:230px"></div>
     </body>
 
 
