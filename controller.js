@@ -89,7 +89,10 @@ function showButton(){
 
         authorization: function() {
             loginOptions = {scope: "profile", popup: "true"};
-            authRequest = amazon.Login.authorize (loginOptions);
+            authRequest = amazon.Login.authorize(loginOptions);
+        },
+        onError: function(error) {
+            console.log(error)
         }
     });
 }
