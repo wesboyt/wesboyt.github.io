@@ -46,6 +46,25 @@
                 // See "Handling Errors" for more information.
                 }
             }).bind("addressBookWidgetDiv");
+
+            walletWidget = new OffAmazonPayments.Widgets.Wallet({
+                sellerId: 'A161J2LIJO90VQ',
+                // amazonBillingAgreementId obtained from the AddressBook widget
+                amazonBillingAgreementId: amazonBillingAgreementId,
+                onPaymentSelect: function(billingAgreement) {
+                    // Replace this code with the action that you want to perform
+                    // after the payment method is selected.
+                },
+                design: {
+                    designMode: 'responsive'
+                },
+                onError: function(error) {
+                    // your error handling code
+                }
+            });
+            walletWidget.setPresentmentCurrency("USD");
+            // ISO-4217 currency code, merchant is expected to enter a valid currency supported by Amazon Pay.
+            walletWidget.bind("walletWidgetDiv");
         </script>
         <script src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js' async></script>
         <meta charset="UTF-8">
@@ -73,6 +92,8 @@
                     <input type="text" id="hhin" value="PokerStars Hand #219042..." size="77">
         </div>
         <div id="AmazonPayButton" style="position:absolute;top:250px"></div>
+        <div id="addressBookWidgetDiv" style="position:absolute;top:270px"></div>
+        <div id="walletWidgetDiv" style="position:absolute;top:290px"></div>
     </body>
 
 
