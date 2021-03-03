@@ -80,7 +80,7 @@ function post(url, data) {
 
 }
 
-function showButton(){
+function showButton() {
     let authRequest;
     OffAmazonPayments.Button("AmazonPayButton", "A161J2LIJO90VQ", {
         type:  "PwA",

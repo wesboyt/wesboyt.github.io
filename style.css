@@ -15,3 +15,17 @@
     border-color:#5a5a5c;
     font-weight:bolder;
 }
+
+#addressBookWidgetDiv {
+    min-width: 300px;
+    max-width: 600px;
+    min-height: 228px;
+    max-height: 400px;
+}
+
+#walletWidgetDiv {
+    min-width: 300px;
+    max-width:600px;
+    min-height: 228px;
+    max-height: 400px;
+}
