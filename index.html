@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script type='text/javascript' src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js'></script>
         <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0"/>
         <script type='text/javascript'>
             window.onAmazonLoginReady = function() {
@@ -12,38 +13,29 @@
             };
             new OffAmazonPayments.Widgets.AddressBook({
                 sellerId: 'A161J2LIJO90VQ',
-                onOrderReferenceCreate: function(orderReference) {
-                    // Here is where you can grab the Order Reference ID.
-                    orderReference.getAmazonOrderReferenceId();
+                agreementType: 'orderReference',
+
+                onReady: function(billingAgreement) {
+                    var billingAgreementId = billingAgreement.
+                    getAmazonBillingAgreementId();
                 },
-                onAddressSelect: function(orderReference) {
-                // Replace the following code with the action that you want
-                // to perform after the address is selected. The
-                // amazonOrderReferenceId can be used to retrieve the address
-                // details by calling the GetOrderReferenceDetails operation.
-
-                // If rendering the AddressBook and Wallet widgets
-                // on the same page, you do not have to provide any additional
-                // logic to load the Wallet widget after the AddressBook widget.
-
-                // The Wallet widget will re-render itself on all subsequent
-                // onAddressSelect events without any action from you.
-                // We don't recommend that you explicitly refresh it.
+                onAddressSelect: function(billingAgreement) {
+                    // Replace the following code with the action that you want to perform
+                    // after the address is selected.
+                    // The amazonBillingAgreementId can be used to retrieve
+                    // the address details by calling the GetBillingAgreementDetails operation.
+                    // If rendering the AddressBook and Wallet widgets on the same page, you
+                    // should wait for this event before you render the Wallet widget for
+                    // the first time.
+                    // The Wallet widget will re-render itself on all subsequent
+                    // onAddressSelect events without any action from you. We don't
+                    // recommend that you explicitly refresh it.
                 },
                 design: {
                     designMode: 'responsive'
                 },
-                onReady: function(orderReference) {
-                // Enter code here that you want to be executed
-                // when the address widget has been rendered.
-                },
-
                 onError: function(error) {
-                // Your error handling code.
-                // During development you can use the following
-                // code to view error messages:
-                // console.log(error.getErrorCode() + ': ' + error.getErrorMessage());
-                // See "Handling Errors" for more information.
+                    // your error handling code
                 }
             }).bind("addressBookWidgetDiv");
 
@@ -66,7 +58,6 @@
             // ISO-4217 currency code, merchant is expected to enter a valid currency supported by Amazon Pay.
             walletWidget.bind("walletWidgetDiv");
         </script>
-        <script src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js' async></script>
         <meta charset="UTF-8">
         <title>nl->plo6</title>
         <script src="hello.js"></script>
@@ -92,8 +83,8 @@
                     <input type="text" id="hhin" value="PokerStars Hand #219042..." size="77">
         </div>
         <div id="AmazonPayButton" style="position:absolute;top:250px"></div>
-        <div id="addressBookWidgetDiv"></div>
-        <div id="walletWidgetDiv"></div>
+        <div id="addressBookWidgetDiv" style="width: 400px; height: 228px;"></div>
+        <div id="walletWidgetDiv" style="width: 400px; height: 228px;"></div>
     </body>
 
 
