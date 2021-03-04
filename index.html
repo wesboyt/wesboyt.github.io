@@ -21,8 +21,9 @@
             <input type="text" id="hhin" value="PokerStars Hand #219042..." size="77">
         </div>
         <div style="position:absolute; top:80px;">
-            <div><div id="AmazonPayButton"></div></div><button type="button" name="button" id="Logout">Logout</button>
-            <div id="addressBookWidgetDiv" style="height:250px;width:400px;"></div>
+            <div id="AmazonPayButton"></div>
+            <button type="button" name="button" id="Logout" style="visibility:hidden;">Logout</button>
+            <div id="addressBookWidgetDiv" style="height:250px;width:400px;visibility:hidden;"></div>
             <div id="walletWidgetDiv" style="height:250px;width:400px"></div>
         </div>
         <script type='text/javascript'>
@@ -67,7 +68,12 @@
                             // console.log(t.access_token);
                             // console.log(t.expires_in);
                             // console.log(t.token_type);
+                            document.getElementById('addressBookWidgetDiv').style.visibility = "visible";
                             showAddressBookWidget();
+                            document.getElementById('Logout').style.visibility = "visible";
+                            document.getElementById('AmazonPayButton').style.visibility = "hidden";
+
+
                         });
                     }
                 });
