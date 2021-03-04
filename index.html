@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <script type='text/javascript' src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js'></script>
         <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0"/>
         <script type='text/javascript'>
             window.onAmazonLoginReady = function() {
                 amazon.Login.setClientId('amzn1.application-oa2-client.fd922f31472e455694efb315ebd54c65');
             };
-
+        </script>
+        <script type='text/javascript' src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js'></script>
+        <script>
             window.onAmazonPaymentsReady = function() {
                 showButton();
             };
