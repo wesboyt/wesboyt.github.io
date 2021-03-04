@@ -1,74 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0"/>
-        <script type='text/javascript'>
-            window.onAmazonLoginReady = function() {
-                amazon.Login.setClientId('amzn1.application-oa2-client.fd922f31472e455694efb315ebd54c65');
-                amazon.Login.setUseCookie(true);
-            };
-        </script>
-        <script async='async' type='text/javascript' src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js'></script>
-        <script>
-        window.onAmazonPaymentsReady = function() {
-                showButton();
-            };
-            new OffAmazonPayments.Widgets.AddressBook({
-                sellerId: 'A161J2LIJO90VQ',
-                agreementType: 'orderReference',
-
-                onReady: function(billingAgreement) {
-                    var billingAgreementId = billingAgreement.
-                    getAmazonBillingAgreementId();
-                },
-                onAddressSelect: function(billingAgreement) {
-                    // Replace the following code with the action that you want to perform
-                    // after the address is selected.
-                    // The amazonBillingAgreementId can be used to retrieve
-                    // the address details by calling the GetBillingAgreementDetails operation.
-                    // If rendering the AddressBook and Wallet widgets on the same page, you
-                    // should wait for this event before you render the Wallet widget for
-                    // the first time.
-                    // The Wallet widget will re-render itself on all subsequent
-                    // onAddressSelect events without any action from you. We don't
-                    // recommend that you explicitly refresh it.
-                },
-                design: {
-                    designMode: 'responsive'
-                },
-                onError: function(error) {
-                    // your error handling code
-                }
-            }).bind("addressBookWidgetDiv");
-
-            walletWidget = new OffAmazonPayments.Widgets.Wallet({
-                sellerId: 'A161J2LIJO90VQ',
-                // amazonBillingAgreementId obtained from the AddressBook widget
-                amazonBillingAgreementId: amazonBillingAgreementId,
-                onPaymentSelect: function(billingAgreement) {
-                    // Replace this code with the action that you want to perform
-                    // after the payment method is selected.
-                },
-                design: {
-                    designMode: 'responsive'
-                },
-                onError: function(error) {
-                    // your error handling code
-                }
-            });
-            walletWidget.setPresentmentCurrency("USD");
-            // ISO-4217 currency code, merchant is expected to enter a valid currency supported by Amazon Pay.
-            walletWidget.bind("walletWidgetDiv");
-        </script>
         <meta charset="UTF-8">
         <title>nl->plo6</title>
         <script src="hello.js"></script>
         <script src="controller.js"></script>
-        <script type='text/javascript'>
-            window.onAmazonPaymentsReady = function() {
-                showButton();
-            };
-        </script>
     </head>
     <body style="background-color:#2b2b2b">
         <div id="main" style="position:absolute;top:100px">
@@ -84,9 +20,157 @@
         <div id="hh" style="position:absolute;top:210px">
                     <input type="text" id="hhin" value="PokerStars Hand #219042..." size="77">
         </div>
-        <div id="AmazonPayButton" style="position:absolute;top:250px"></div>
-        <div id="addressBookWidgetDiv" style="width: 400px; height: 228px;"></div>
-        <div id="walletWidgetDiv" style="width: 400px; height: 228px;"></div>
+        <div style="text-align: center; border: 1px solid #bbb;border-radius: 3px;padding:5px;margin:5px;"><div id="AmazonPayButton"></div></div><button type="button" name="button" id="Logout">Logout</button>
+        <div id="addressBookWidgetDiv" style="height:250px"></div>
+        <div id="walletWidgetDiv" style="height:250px"></div>
+        <script type='text/javascript'>
+            // get access token
+            function getURLParameter(name, source) {
+                return decodeURIComponent((new RegExp('[?|&amp;|#]' + name + '=' +
+                    '([^&;]+?)(&|#|;|$)').exec(source) || [, ""])[1].replace(/\+/g, '%20')) || null;
+            }
+
+            var accessToken = getURLParameter("access_token", location.hash);
+            if (typeof accessToken === 'string' && accessToken.match(/^Atza/)) {
+                document.cookie = "amazon_Login_accessToken=" + accessToken + ";path=/;secure";
+            }
+
+            window.onAmazonLoginReady = function() {
+
+                amazon.Login.setClientId("amzn1.application-oa2-client.fd922f31472e455694efb315ebd54c65");
+            };
+
+            window.onAmazonPaymentsReady = function() {
+                showLoginButton();
+                showAddressBookWidget();
+
+            };
+
+            document.getElementById('Logout').onclick = function() {
+                amazon.Login.logout();
+                document.cookie = "amazon_Login_accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                window.location.href = '/';
+            };
+        </script>
+
+        <script type='text/javascript'>
+            function showLoginButton() {
+                var authRequest;
+                OffAmazonPayments.Button("AmazonPayButton", "A161J2LIJO90VQ", {
+                    type:  "Pay",
+                    color: "Gold",
+                    size:  "medium",
+
+                    authorization: function() {
+                        loginOptions = {scope: "profile payments:widget payments:shipping_address", popup: true};
+                        authRequest = amazon.Login.authorize (loginOptions, function(t) {
+                            // console.log(t.access_token);
+                            // console.log(t.expires_in);
+                            // console.log(t.token_type);
+                            showAddressBookWidget();
+                        });
+                    }
+                });
+            }
+
+            function showAddressBookWidget() {
+                // AddressBook
+                new OffAmazonPayments.Widgets.AddressBook({
+                    sellerId: 'A161J2LIJO90VQ',
+
+                    onReady: function (orderReference) {
+                        var orderReferenceId = orderReference.getAmazonOrderReferenceId();
+                        var el;
+                        if ((el = document.getElementById("orderReferenceId"))) {
+                            el.value = orderReferenceId;
+                        }
+                        // Wallet
+                        showWalletWidget(orderReferenceId);
+                    },
+                    onAddressSelect: function (orderReference) {
+                        // do stuff here like recalculate tax and/or shipping
+                    },
+                    design: {
+                        designMode: 'responsive'
+                    },
+                    onError: function (error) {
+                        // Error handling code
+                        // We also recommend that you implement an onError handler in your code.
+                        // @see https://payments.amazon.com/documentation/lpwa/201954960
+                        console.log('OffAmazonPayments.Widgets.AddressBook', error.getErrorCode(), error.getErrorMessage());
+                        switch (error.getErrorCode()) {
+                            case 'AddressNotModifiable':
+                                // You cannot modify the shipping address when the order reference is in the given state.
+                                break;
+                            case 'BuyerNotAssociated':
+                                // The buyer is not associated with the given order reference.
+                                // The buyer must sign in before you render the widget.
+                                break;
+                            case 'BuyerSessionExpired':
+                                // The buyer's session with Amazon has expired.
+                                // The buyer must sign in before you render the widget.
+                                break;
+                            case 'InvalidAccountStatus':
+                                // Your merchant account is not in an appropriate state to execute this request.
+                                // For example, it has been suspended or you have not completed registration.
+                                break;
+                            case 'InvalidOrderReferenceId':
+                                // The specified order reference identifier is invalid.
+                                break;
+                            case 'InvalidParameterValue':
+                                // The value assigned to the specified parameter is not valid.
+                                break;
+                            case 'InvalidSellerId':
+                                // The merchant identifier that you have provided is invalid. Specify a valid SellerId.
+                                break;
+                            case 'MissingParameter':
+                                // The specified parameter is missing and must be provided.
+                                break;
+                            case 'PaymentMethodNotModifiable':
+                                // You cannot modify the payment method when the order reference is in the given state.
+                                break;
+                            case 'ReleaseEnvironmentMismatch':
+                                // You have attempted to render a widget in a release environment that does not match the release environment of the Order Reference object.
+                                // The release environment of the widget and the Order Reference object must match.
+                                break;
+                            case 'StaleOrderReference':
+                                // The specified order reference was not confirmed in the allowed time and is now canceled.
+                                // You cannot associate a payment method and an address with a canceled order reference.
+                                break;
+                            case 'UnknownError':
+                                // There was an unknown error in the service.
+                                break;
+                            default:
+                            // Oh My God, What's going on?
+                        }
+                    }
+                }).bind("addressBookWidgetDiv");
+            }
+
+            function showWalletWidget(orderReferenceId) {
+                // Wallet
+                new OffAmazonPayments.Widgets.Wallet({
+                    sellerId: 'A161J2LIJO90VQ',
+                    amazonOrderReferenceId: orderReferenceId,
+                    onReady: function(orderReference) {
+                        console.log(orderReference.getAmazonOrderReferenceId());
+                    },
+                    onPaymentSelect: function() {
+                        console.log(arguments);
+                    },
+                    design: {
+                        designMode: 'responsive'
+                    },
+                    onError: function(error) {
+                        // Error handling code
+                        // We also recommend that you implement an onError handler in your code.
+                        // @see https://payments.amazon.com/documentation/lpwa/201954960
+                        console.log('OffAmazonPayments.Widgets.Wallet', error.getErrorCode(), error.getErrorMessage());
+                    }
+                }).bind("walletWidgetDiv");
+            }
+        </script>
+        <script type="text/javascript" src="https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js" async></script>
     </body>
 
 
