@@ -1,3 +1,23 @@
+function occurrences(string, subString, allowOverlapping) {
+
+    string += "";
+    subString += "";
+    if (subString.length <= 0) return (string.length + 1);
+
+    var n = 0,
+        pos = 0,
+        step = allowOverlapping ? 1 : subString.length;
+
+    while (true) {
+        pos = string.indexOf(subString, pos);
+        if (pos >= 0) {
+            ++n;
+            pos += step;
+        } else break;
+    }
+    return n;
+}
+
 function setup() {
     let txt = document.querySelector("#in");
     txt.style.cssText = "color:#a4a3a3;"
@@ -58,9 +78,15 @@ function setup() {
     hh.addEventListener('change', (event) => {
         if(event.target.files) {
             let reader = new FileReader();
-
             reader.onload = (e) => {
-                console.log(e.target.result);
+                let fileStr = e.target.result;
+                let handCount = occurrences(fileStr,"PokerStars ", false)
+                //handCount
+                let price = document.querySelector("#price");
+                price.textContent = "$" + (0.01 * handCount + 0.3).toFixed(2);
+                price.style.visibility = "visible";
+                document.querySelector("#AmazonPayButton").style.visibility = "visible";
+
             }
             reader.readAsText(event.target.files[0]);
         }
