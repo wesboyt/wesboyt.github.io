@@ -17,17 +17,18 @@
                 </tbody>
             </table>
         </div>
-        <div id="hh">
-            <input type="text" id="hhin" value="PokerStars Hand #219042..." size="77">
-        </div>
         <div style="position:absolute; top:110px;">
-            <div id="AmazonPayButton"></div>
-            <button type="button" name="button" id="Logout" style="visibility: hidden;">Logout</button>
+            <input type="file" id="HandHistory" name="HandHistory" style="color:#a4a3a3;">
+            <div id="AmazonPayButton" style="visibility: hidden;"></div>
             <div id="addressBookWidgetDiv" style="height:250px;width:400px;"></div>
             <div id="walletWidgetDiv" style="height:250px;width:400px"></div>
+            <table id="btns">
+                <button type="button" name="button" id="Logout" style="visibility: hidden;">Logout</button>
+                <button type="button" name="button" id="Checkout" style="visibility: hidden;">Checkout</button>
+            </table>
+
         </div>
         <script type='text/javascript'>
-            // get access token
             function getURLParameter(name, source) {
                 return decodeURIComponent((new RegExp('[?|&amp;|#]' + name + '=' +
                     '([^&;]+?)(&|#|;|$)').exec(source) || [, ""])[1].replace(/\+/g, '%20')) || null;
@@ -68,15 +69,12 @@
                     authorization: function() {
                         loginOptions = {scope: "profile payments:widget payments:shipping_address", popup: true};
                         authRequest = amazon.Login.authorize (loginOptions, function(t) {
-                            console.log(t.access_token);
-                            console.log(t.expires_in);
-                            console.log(t.token_type);
+                            //console.log(t.access_token);
+                            //console.log(t.expires_in);
+                            //console.log(t.token_type);
                             showAddressBookWidget();
                             document.getElementById('Logout').style.visibility = "visible";
                             document.getElementById('AmazonPayButton').style.visibility = "hidden";
-                            console.log('wtf');
-
-
                         });
                     }
                 });

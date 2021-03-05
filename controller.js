@@ -54,7 +54,19 @@ function setup() {
             }
         }
     );
-    let hh = document.querySelector("#hhin");
+    let hh = document.querySelector("#HandHistory");
+    hh.addEventListener('change', (event) => {
+        if(event.target.files) {
+            let reader = new FileReader();
+
+            reader.onload = (e) => {
+                console.log(e.target.result);
+            }
+            reader.readAsText(event.target.files[0]);
+        }
+    });
+
+    /*
     hh.style.cssText = "color:#a4a3a3;"
     hh.style.background = "#474749"
     hh.style.borderColor = "#5a5a5c"
@@ -63,6 +75,7 @@ function setup() {
             post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/Pay", hh.value);
         }
     });
+     */
 }
 
 function post(url, data) {
