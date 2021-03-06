@@ -169,6 +169,11 @@
                     },
                     onPaymentSelect: function() {
                         console.log(arguments);
+                        console.log(arguments[0].getPaymentInstrumentsDisplayOptions());
+                        console.log(arguments[0].getSellerId());
+                        console.log(arguments[0].getMarketplaceSellerId());
+                        console.log(arguments[0].getContractId());
+                        console.log(arguments[0].setContractId(5));
                     },
                     design: {
                         designMode: 'responsive'
