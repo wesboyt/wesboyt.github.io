@@ -86,10 +86,15 @@ function setup() {
                 price.textContent = "$" + (0.01 * handCount + 0.3).toFixed(2);
                 price.style.visibility = "visible";
                 document.querySelector("#AmazonPayButton").style.visibility = "visible";
-
             }
             reader.readAsText(event.target.files[0]);
         }
+    });
+
+    let ch = document.querySelector("#Checkout");
+    ch.addEventListener('click', (event) => {
+        //submit reference
+
     });
 
     /*

@@ -90,6 +90,7 @@
 
                     onReady: function (orderReference) {
                         var orderReferenceId = orderReference.getAmazonOrderReferenceId();
+                        console.log(orderReference);
                         var el;
                         if ((el = document.getElementById("orderReferenceId"))) {
                             el.value = orderReferenceId;
@@ -99,6 +100,7 @@
                     },
                     onAddressSelect: function (orderReference) {
                         // do stuff here like recalculate tax and/or shipping
+
                     },
                     design: {
                         designMode: 'responsive'
