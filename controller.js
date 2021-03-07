@@ -81,13 +81,18 @@ function setup() {
             reader.onload = (e) => {
                 let fileStr = e.target.result;
                 let handCount = occurrences(fileStr,"PokerStars ", false)
-                let price = document.querySelector("#price");
-                let tempPrice = (0.01 * handCount + 0.3).toFixed(2);
-                price.textContent = "$" + tempPrice;
-                localStorage.hh = fileStr;
-                localStorage.price = tempPrice;
-                price.style.visibility = "visible";
-                document.querySelector("#AmazonPayButton").style.visibility = "visible";
+                if(handCount > 0) {
+                    let price = document.querySelector("#price");
+                    let tempPrice = (0.01 * handCount + 0.3).toFixed(2);
+                    price.textContent = "$" + tempPrice;
+                    localStorage.hh = fileStr;
+                    localStorage.price = tempPrice;
+                    price.style.visibility = "visible";
+                    document.querySelector("#AmazonPayButton").style.visibility = "visible";
+                } else {
+                    alert("That file does not contain a Pokerstars handhistory in the expected format, choose another file.");
+                }
+
             }
             reader.readAsText(event.target.files[0]);
         }
@@ -95,18 +100,22 @@ function setup() {
 
     let ch = document.querySelector("#Checkout");
     ch.addEventListener('click', (event) => {
-        let body = {
-            'hh' : localStorage.hh,
-            'ref' : localStorage.referenceID,
-            'price' : localStorage.price,
-        }
+        if(localStorage.hh && localStorage.referenceID && localStorage.price){
+            let body = {
+                'hh' : localStorage.hh,
+                'ref' : localStorage.referenceID,
+                'price' : localStorage.price,
+            }
 
-        post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/Pay", body);
-        alert("Your poker order of: $" + localStorage.price + " has been submitted, watch your email for your solutions.");
+            post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/Pay", body);
+            alert("Your poker order of: $" + localStorage.price + " has been submitted, watch your email for your solutions.");
+        } else {
+            alert("Something is wrong with the checkout process, try refreshing the page.");
+        }
         localStorage.hh = '';
         localStorage.ref = '';
         localStorage.price = '';
-        let ch = document.querySelector("#Logout").click();
+        document.querySelector("#Logout").click();
     });
 }
 
