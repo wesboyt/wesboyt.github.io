@@ -27,7 +27,7 @@
             <div id="walletWidgetDiv" style="height:250px;width:400px"></div>
             <table id="btns">
                 <button type="button" name="button" id="Logout" style="visibility: hidden;">Logout</button>
-                <button type="button" name="button" id="Checkout" style="visibility: hidden;">Checkout</button>
+                <button type="button" name="button" id="Checkout" style="visibility: hidden;">Confirm Checkout</button>
             </table>
 
         </div>
@@ -168,12 +168,9 @@
                         console.log(orderReference.getAmazonOrderReferenceId());
                     },
                     onPaymentSelect: function() {
-                        console.log(arguments);
-                        console.log(arguments[0].getPaymentInstrumentsDisplayOptions());
-                        console.log(arguments[0].getSellerId());
-                        console.log(arguments[0].getMarketplaceSellerId());
-                        console.log(arguments[0].getContractId());
-                        console.log(arguments[0].setContractId(5));
+                        console.log(arguments[0]);
+                        document.getElementById('Checkout').style.visibility = "visible";
+                        localStorage.referenceID = arguments[0].getContractId();
                     },
                     design: {
                         designMode: 'responsive'

@@ -81,9 +81,11 @@ function setup() {
             reader.onload = (e) => {
                 let fileStr = e.target.result;
                 let handCount = occurrences(fileStr,"PokerStars ", false)
-                //handCount
                 let price = document.querySelector("#price");
-                price.textContent = "$" + (0.01 * handCount + 0.3).toFixed(2);
+                let tempPrice = (0.01 * handCount + 0.3).toFixed(2);
+                price.textContent = "$" + tempPrice;
+                localStorage.hh = fileStr;
+                localStorage.price = tempPrice;
                 price.style.visibility = "visible";
                 document.querySelector("#AmazonPayButton").style.visibility = "visible";
             }
@@ -93,7 +95,12 @@ function setup() {
 
     let ch = document.querySelector("#Checkout");
     ch.addEventListener('click', (event) => {
-        //submit reference
+        let body = {
+            'hh' : localStorage.hh,
+            'ref' : localStorage.referenceID,
+            'price' : localStorage.price,
+        }
+        post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/Pay", hh.value);
 
     });
 
@@ -103,7 +110,7 @@ function setup() {
     hh.style.borderColor = "#5a5a5c"
     hh.addEventListener('keypress', (key) => {
         if(key.key == 'Enter') {
-            post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/Pay", hh.value);
+
         }
     });
      */
