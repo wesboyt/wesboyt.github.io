@@ -169,6 +169,7 @@
                     },
                     onPaymentSelect: function() {
                         console.log(arguments[0]);
+                        console.log(arguments[0].getID());
                         document.getElementById('Checkout').style.visibility = "visible";
                         localStorage.referenceID = arguments[0].getContractId();
                     },

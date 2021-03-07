@@ -100,20 +100,14 @@ function setup() {
             'ref' : localStorage.referenceID,
             'price' : localStorage.price,
         }
-        post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/Pay", hh.value);
 
+        post("https://ehl0o7x7ai.execute-api.us-west-2.amazonaws.com/Pay", body);
+        alert("Your poker order of: $" + localStorage.price + " has been submitted, watch your email for your solutions.");
+        localStorage.hh = '';
+        localStorage.ref = '';
+        localStorage.price = '';
+        let ch = document.querySelector("#Logout").click();
     });
-
-    /*
-    hh.style.cssText = "color:#a4a3a3;"
-    hh.style.background = "#474749"
-    hh.style.borderColor = "#5a5a5c"
-    hh.addEventListener('keypress', (key) => {
-        if(key.key == 'Enter') {
-
-        }
-    });
-     */
 }
 
 function post(url, data) {
