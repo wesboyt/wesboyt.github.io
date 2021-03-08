@@ -1,0 +1,21 @@
+The universal poker hand data format is a data structure for our purposes we will show the structure within json but any format may be chosen.
+At the top level it is comprised of a list of lists of strings:
+[["Qh4s","8sQc","3s6d","4h9c","Tc3d","9hKc"],["Js","Ts","9s"],["p0c100","p1c99","p2c109","p3c102","p4c110","p5c85","p0c1","p1c2"],["p2f","p3f","p4f","p5c43","p0f","p1f"],[],[],[]]
+[[holecards],[boardcards],[initial state],[preflop],[flop],[turn],[river]]
+
+there are three types of values
+
+holeCards: "Qh4s..." can potentially be comprised of 6+ cards per hand index.
+
+boardCards: "Js" always 1 card per index first 3 indexes are always the flop, followed by the turn and river in order.
+
+playerAction: "p0c100" there are two distinct sections "p0" and "c100" p0 == player 0,
+there are upto x players in any given game, in this context p0 is always the small blind, p1 is always the big blind and px-1 is always the dealer.
+"c100" represents an explicit number of chips. In games where only dollars play it represents $100 but in games with cents it represents 100 pennies or $1.
+most player actions represent placing chips into the pot whether as a call, raise, blind, or ante however there are is an exception.
+The initial states first x indexes represent the stack sizes of each player represented as player actions thus:
+["p0c100","p1c99","p2c109","p3c102","p4c110","p5c85","p0c1","p1c2"]
+==
+player 0 stack size 100, player 1 stack size 99 chips, ... player 5 stack size 85 chips, player 0 ante 1 chip, player 2 ante 2 chips.
+
+
